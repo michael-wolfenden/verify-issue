@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: UseDotNet@2
+  displayName: Use .NET SDK 8.x
+  inputs:
+    version: '8.x'
+- task: DotNetCoreCLI@2
+  displayName: Run tests
+  inputs:
+    command: 'test'
+    arguments: '--configuration release'
+    # Test fails when pointing directly at a csproj
+    projects: "VerifyIssue.Tests/VerifyIssue.Tests.csproj"
+    # Test passed when pointing at the solution
+    # projects: 'VerifyIssue.sln'
